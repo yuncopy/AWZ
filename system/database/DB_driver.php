@@ -607,6 +607,7 @@ abstract class CI_DB_driver {
 	 */
 	public function query($sql, $binds = FALSE, $return_object = NULL)
 	{
+
 		if ($sql === '')
 		{
 			log_message('error', 'Invalid query: '.$sql);
@@ -651,6 +652,7 @@ abstract class CI_DB_driver {
 		$time_start = microtime(TRUE);
 
 		// Run the Query
+
 		if (FALSE === ($this->result_id = $this->simple_query($sql)))
 		{
 			if ($this->save_queries === TRUE)

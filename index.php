@@ -313,6 +313,9 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 
-require_once './vendor/autoload.php';  //必须在前面
+$vendor = './vendor/autoload.php';
+if(file_exists($vendor)){
+	require_once "{$vendor}";  //必须在前面
+}
 
 require_once BASEPATH.'core/CodeIgniter.php';
