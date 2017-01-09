@@ -42,6 +42,9 @@ class Index extends CI_Controller {
         $this->load->view('admin/welcome');
     }
 
+
+
+    /*=========================管理员管理==========================*/
     /**
      *角色管理列表
      */
@@ -60,18 +63,20 @@ class Index extends CI_Controller {
     }
 
     /**
-     *权限管理
+     *权限管理列表
      */
     public  function permission(){
 
         $this->load->view('admin/permission');
     }
+
+
     /**
      *添加权限节点 / 显示页面
      */
     public  function permission_add(){
-        $config = get_config();
-        var_dump($config);
+       // $config = config_item('time_reference');
+       // var_dump($config);
         $post = $this->input->post();
         if($post){
             $this->load->helper('security');
@@ -81,15 +86,33 @@ class Index extends CI_Controller {
                 'status' => encode_php_tags($post['status']),
                 'desc' => encode_php_tags($post['desc'])
             );
-            $results = $this->db->insert('mytable', $data);
+            $results = $this->db->insert(config_item('AUTH_RULE'), $data);
             var_dump($results);
 
         }else{
             $this->load->view('admin/permission_add');
         }
-
-
     }
+
+    /**
+     *删除权限节点
+     */
+    public  function permission_del(){
+
+       echo 'permission_del';
+    }
+
+
+    /**
+     *批量删除权限节点
+     */
+    public  function permission_bth(){
+
+        echo 'permission_del';
+    }
+
+
+
 
 
 
