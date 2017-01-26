@@ -67,7 +67,18 @@ class Index extends CI_Controller {
      */
     public  function permission(){
 
-        $this->load->view('admin/permission');
+        $this->db->select('path, title, status,id');
+        $query = $this->db->get(config_item('AUTH_RULE'));  //result_array()
+        if ($query->num_rows() > 0)
+        {
+            $result_auth_rule = array();
+            foreach ($query->result_array() as $row)
+            {
+                $result_auth_rule[] = $row;
+            }
+        }
+        $data['result_list']=$result_auth_rule;
+        $this->load->view('admin/permission',$data);
     }
 
 
