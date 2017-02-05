@@ -770,7 +770,7 @@ class CI_Input {
 		}
 		else
 		{
-			isset($_SERVER['CONTENT_TYPE']) && $this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
+			isset($_SERVER['CONTENT_TYPE']) && ($this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE']);
 
 			foreach ($_SERVER as $key => $val)
 			{

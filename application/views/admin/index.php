@@ -95,13 +95,13 @@
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="member-list.html" data-title="会员列表" href="javascript:;">会员列表</a></li>
-					<li><a _href="member-del.html" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
-					<li><a _href="member-level.html" data-title="等级管理" href="javascript:;">等级管理</a></li>
-					<li><a _href="member-scoreoperation.html" data-title="积分管理" href="javascript:;">积分管理</a></li>
-					<li><a _href="member-record-browse.html" data-title="浏览记录" href="javascript:void(0)">浏览记录</a></li>
-					<li><a _href="member-record-download.html" data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
-					<li><a _href="member-record-share.html" data-title="分享记录" href="javascript:void(0)">分享记录</a></li>
+					<li><a _href="/admin/member/member_list.html" data-title="会员列表" href="javascript:;">会员列表</a></li>
+					<li><a _href="/admin/member/member_stop.html" data-title="停用的会员" href="javascript:;">停用会员</a></li>
+					<li><a _href="/admin/member/member_level.html" data-title="等级管理" href="javascript:;">等级管理</a></li>
+					<li><a _href="/admin/member/member_integral.html" data-title="积分管理" href="javascript:;">积分管理</a></li>
+					<li><a _href="/admin/member/member_browse.html" data-title="浏览记录" href="javascript:void(0)">浏览记录</a></li>
+					<li><a _href="/admin/member/member_download.html" data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
+					<li><a _href="/admin/member/member_share.html" data-title="分享记录" href="javascript:void(0)">分享记录</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -109,9 +109,9 @@
 			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="admin_role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a _href="permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-					<li><a _href="admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+					<li><a _href="/admin/index/admin_role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a _href="/admin/index/permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<li><a _href="/admin/index/admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
 				</ul>
 			</dd>
 		</dl>

@@ -83,7 +83,7 @@ $autoload['libraries'] = array('database');
 */
 
 //$autoload['drivers'] = array();
-$autoload['drivers'] = array('session');   //自动加载session类
+$autoload['drivers'] = array('Session');   //自动加载session类
 
 /*
 | -------------------------------------------------------------------

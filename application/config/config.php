@@ -315,6 +315,7 @@ $config['cache_query_string'] = FALSE;
 |
 */
 $config['encryption_key'] = '';
+//$config['encryption_key'] = 'abc1234';
 
 /*
 |--------------------------------------------------------------------------
