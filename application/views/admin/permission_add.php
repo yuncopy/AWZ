@@ -1,7 +1,21 @@
 <?php $this->load->view('admin/_header'); ?>
 <div class="pd-20">
   <form action="/admin/index/permission_add.html" method="post" class="form form-horizontal" id="form-member-add">
-    <div class="row cl">
+
+      <div class="row cl">
+          <label class="form-label col-3"><span class="c-red">*</span>节点类别：</label>
+          <div class="formControls col-5">
+                <span class="select-box">
+                    <select name="pid" class="select"  placeholder="节点类别" id="pid" datatype="*" nullmsg="节点类别不能为空" >
+                        <option  value='0' readonly='readonly'>一级节点</option>
+                        <?php echo $data_option;?>
+                    </select>
+				</span>
+          </div>
+          <div class="col-4"> </div>
+      </div>
+
+      <div class="row cl">
       <label class="form-label col-3"><span class="c-red">*</span>节点名称：</label>
       <div class="formControls col-5">
         <input type="text" class="input-text" value="" placeholder="添加管理员" id="title" name="title" datatype="*2-16" nullmsg="节点名称不能为空">

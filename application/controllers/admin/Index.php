@@ -65,50 +65,33 @@ class Index extends MY_Controller {
     /**
      *权限管理列表
      */
-    public  function permission(){
+    public  function permission($result= false){
 
-        $is_ajax = $this->input->is_ajax_request();
-        if($is_ajax){
-            //select *,concat(path,id) as path_id from awz_auth_rule order by path_id
-            //$aColumns = array('id','url', 'title','states','description','concat(path,id)');
-            $aColumns = array('id','url', 'title','states','description','pid');
-            $sTable = config_item('AUTH_RULE');
-            $output  = $this->getTable($aColumns, $sTable);
-            //顺序和内容取决于页面显示内容
-            foreach ($output['rResult'] as $key => $col){
-                $row = array();
-                foreach($col as $k => $v){
-                    switch($k){
-                        case 'id':
-                            $row[] = '<input value="'.$v.'" name="" type="checkbox">';
-                            $row[] =  $v;
-                            break;
-                        case 'states':
-                            if($v == 1){
-                                $iconfont = '<i class="Hui-iconfont">&#xe631;</i>';
-                                $row[] = '<span class="label label-success radius">已启用</span>';
-                            }else if($v == 2){
-                                $iconfont = '<i class="Hui-iconfont">&#xe615;</i>';
-                                $row[] = '<span class="label radius">已停用</span>';
-                            }
-                            break;
-                        default:
-                            $row[] = $v;
-                            break;
-                    }
-                }
-                $row[] ='<a style="text-decoration:none;" onClick="admin_start(this,'.$col['id'].')" href="javascript:;" title="启用">'.$iconfont.'</i>
-                        </a>
-                        <a style="text-decoration:none;" title="编辑" href="javascript:;" onclick="admin_edit(管理员编辑,admin-add.html,'.$col['id'].',800,500)" class="ml-5" >
-                            <i class="Hui-iconfont">&#xe6df;</i>
-                        </a>';
-                $output['output']['aaData'][] = $row;
-            }
-            echo json_encode($output['output']);
-        }else{
-            $this->load->view('admin/permission');
+        //select *,concat(path,id) as path_id from awz_auth_rule order by path_id
+
+        $table_name = $this->db->dbprefix(config_item('AUTH_RULE'));
+        $sql = "select id , pid , url ,path , title , states , concat(path,id) as path_id from ".$table_name." order by path_id";
+        $query = $this->db->query($sql);
+        $option = null;
+        $list_result = array();
+        foreach ($query->result_array() as $row)
+        {
+            $m=substr_count($row['path'],",")-1;
+            $strpad = str_pad("",$m*6*4,"&nbsp;");
+            $dbd =  $row['pid'] == 0 ?  "disabled" :  "";
+            $option .= "<option {$dbd} value='{$row['id']}'>{$strpad}{$row['title']}</option>";
         }
-        return false;
+        if($result){
+            return $option;
+        }else{
+
+            $permission['list_result'] = $list_result;
+
+            $this->load->view('admin/permission',$permission);
+        }
+
+
+
         /*
         $this->db->select('path, title, status,id');
         $query = $this->db->get(config_item('AUTH_RULE'));  //result_array()
@@ -125,6 +108,8 @@ class Index extends MY_Controller {
         */
 
     }
+
+
 
     /**
      *权限管理列表
@@ -208,7 +193,9 @@ class Index extends MY_Controller {
             var_dump($results);
 
         }else{
-            $this->load->view('admin/permission_add');
+            $data_option = $this->permission(true);
+            $data_results['data_option'] = $data_option;
+            $this->load->view('admin/permission_add',$data_results);
         }
     }
 
