@@ -93,7 +93,7 @@ $autoload['drivers'] = array('Session');   //自动加载session类
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array();
+$autoload['helper'] = array('common');
 
 /*
 | -------------------------------------------------------------------

@@ -10,20 +10,36 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_permission_add('添加权限节点','permission_add.html','','380')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加权限节点</a></span> <!--span class="r">共有数据：<strong>54</strong> 条</span--> </div>
     <table  class="table table-border table-bordered table-bg" width="100%" cellspacing="0" id="data">
         <thead>
-            <tr > <!--class="text-c"-->
+            <tr class="text-c">
                 <th width="auto"><input type="checkbox" name="" value=""></th>
                 <th width="auto">ID</th>
                 <th width="auto">URL路径</th>
                 <th width="auto">节点名称</th>
                 <th width="auto">状态</th>
-                <th width="auto">描述</th>
                 <th width="auto">操作</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="text-c">
 
+            <?php foreach ($auth_rule as $item):?>
+            <tr>
+                <td style="text-align: center;"><input type="checkbox" value="" name=""></td>
+                <td style="text-align: center;"><?php echo $item['id'];?></td>
+                <td><?php echo $item['url'];?></td>
+                <td><?php echo $item['title'];?></td>
+                <td><?php echo $item['states'];?></td>
+                <td>
+                    <a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','admin-permission-add.html','1','','310')" class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6df;</i>
+                    </a>
+                    <a title="删除" href="javascript:;" onclick="admin_permission_del(this,'1')" class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6e2;</i>
+                    </a>
+                </td>
             </tr>
+            <?php endforeach;?>
+
+
         </tbody>
     </table>
 </div>
@@ -31,14 +47,15 @@
 
 <script type="text/javascript">
 
-    /*
-     参数解释：
-     title	标题
-     url		请求的url
-     id		需要操作的数据id
-     w		弹出层宽度（缺省调默认值）
-     h		弹出层高度（缺省调默认值）
-     */
+
+        /*
+         参数解释：
+         title	标题
+         url		请求的url
+         id		需要操作的数据id
+         w		弹出层宽度（缺省调默认值）
+         h		弹出层高度（缺省调默认值）
+         */
     /*管理员-权限-添加*/
     function admin_permission_add(title,url,w,h){
         layer_show(title,url,w,h);
@@ -55,8 +72,6 @@
             layer.msg('已删除!',{icon:1,time:1000});
         });
     }
-
 </script>
-
 </body>
 </html>

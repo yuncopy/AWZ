@@ -21,10 +21,19 @@ class Index extends MY_Controller {
 
     //http://hostname/admin/index/show
 
+    static public  $permission = null;
+
     public function __construct($params=null)
     {
         parent::__construct($params);
         // Your own constructor code
+
+        //加载所需要的模块
+        if( !self::$permission){
+            $this->load->model('permission_model');
+            self::$permission =  $this->permission_model;
+        }
+
     }
 
     /**
@@ -69,28 +78,38 @@ class Index extends MY_Controller {
 
         //select *,concat(path,id) as path_id from awz_auth_rule order by path_id
 
-        $table_name = $this->db->dbprefix(config_item('AUTH_RULE'));
-        $sql = "select id , pid , url ,path , title , states , concat(path,id) as path_id from ".$table_name." order by path_id";
-        $query = $this->db->query($sql);
-        $option = null;
-        $list_result = array();
-        foreach ($query->result_array() as $row)
-        {
-            $m=substr_count($row['path'],",")-1;
-            $strpad = str_pad("",$m*6*4,"&nbsp;");
-            $dbd =  $row['pid'] == 0 ?  "disabled" :  "";
-            $option .= "<option {$dbd} value='{$row['id']}'>{$strpad}{$row['title']}</option>";
+        //加载权限模块
+        $auth_rule = self::$permission -> query_auth_rule();
+        if($auth_rule){
+            $option = null;
+            $auth_result = array();
+            foreach($auth_rule as $key => $row){
+                $m  = substr_count($row['path'],",") - 1;
+                $strpad = str_pad("",$m*12*4,"&nbsp;&nbsp;");
+                $dbd =  $row['pid'] == 0 ? "disabled" : "";
+                $option .= "<option {$dbd} value='{$row['id']}'>{$strpad}{$row['title']}</option>";
+                foreach($row as $kk => $col){
+                    if($kk == 'title') {
+                        $title = $row['pid'] == 0 ? "<b>{$strpad}{$col}</b>" : $strpad . $col;
+                        $auth_result[$key][$kk] = $title;
+                    }else if($kk == 'states'){
+                        if($col == 1){
+                            $auth_result[$key][$kk]  = '<span class="label label-success radius">已启用</span>';
+                        }else if($col == 2){
+                            $auth_result[$key][$kk]  = '<span class="label radius">已停用</span>';
+                        }
+                    }else{
+                        $auth_result[$key][$kk]  = $col;
+                    }
+                }
+            }
+            if($result){
+                return $option;
+            }else{
+                $permission['auth_rule'] = $auth_result;
+                $this->load->view('admin/permission',$permission);
+            }
         }
-        if($result){
-            return $option;
-        }else{
-
-            $permission['list_result'] = $list_result;
-
-            $this->load->view('admin/permission',$permission);
-        }
-
-
 
         /*
         $this->db->select('path, title, status,id');
