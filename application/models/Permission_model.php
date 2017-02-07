@@ -24,5 +24,21 @@ class Permission_model extends CI_Model
         return !empty($list_result) ? $list_result : false;
     }
 
+    public  function  insert_auth_rule($post)
+    {
+        if($post){
+            $this->load->helper('security');
+            var_dump($post);exit;
+            $data = array(
+                'path' => encode_php_tags($post['path']),
+                'title' => encode_php_tags($post['title']),
+                'status' => encode_php_tags($post['states']),
+                'description' => encode_php_tags($post['description'])
+            );
+            $results = $this->db->insert(config_item('AUTH_RULE'), $data);
+        }
+        return  !empty($results) ? $results : false;
+
+    }
 
 }

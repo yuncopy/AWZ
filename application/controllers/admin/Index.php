@@ -34,6 +34,9 @@ class Index extends MY_Controller {
             self::$permission =  $this->permission_model;
         }
 
+        //使用加密类
+        $this->load->library('encryption');
+
     }
 
     /**
@@ -80,6 +83,7 @@ class Index extends MY_Controller {
 
         //加载权限模块
         $auth_rule = self::$permission -> query_auth_rule();
+
         if($auth_rule){
             $option = null;
             $auth_result = array();
@@ -87,7 +91,8 @@ class Index extends MY_Controller {
                 $m  = substr_count($row['path'],",") - 1;
                 $strpad = str_pad("",$m*12*4,"&nbsp;&nbsp;");
                 $dbd =  $row['pid'] == 0 ? "disabled" : "";
-                $option .= "<option {$dbd} value='{$row['id']}'>{$strpad}{$row['title']}</option>";
+                $ids = $this->encryption->encrypt($row['id']);
+                $option .= "<option {$dbd} value='{$ids}'>{$strpad}{$row['title']}</option>";
                 foreach($row as $kk => $col){
                     if($kk == 'title') {
                         $title = $row['pid'] == 0 ? "<b>{$strpad}{$col}</b>" : $strpad . $col;
@@ -197,20 +202,10 @@ class Index extends MY_Controller {
      *添加权限节点 / 显示页面
      */
     public  function permission_add(){
-       // $config = config_item('time_reference');
-       // var_dump($config);
+
         $post = $this->input->post();
         if($post){
-            $this->load->helper('security');
-            $data = array(
-                'path' => encode_php_tags($post['path']),
-                'title' => encode_php_tags($post['title']),
-                'status' => encode_php_tags($post['states']),
-                'desc' => encode_php_tags($post['description'])
-            );
-            $results = $this->db->insert(config_item('AUTH_RULE'), $data);
-            var_dump($results);
-
+            self::$permission -> insert_auth_rule($post);
         }else{
             $data_option = $this->permission(true);
             $data_results['data_option'] = $data_option;
